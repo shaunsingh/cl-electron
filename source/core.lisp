@@ -42,7 +42,7 @@
     :documentation "A list of custom schemes (protocols).
 The slot can only be set before invoking `launch'.")
    (server-path
-    (asdf:system-relative-pathname :cl-electron "source/server.js")
+    #P"@cl-electron-server@/source/server.js"
     :export t
     :reader t
     :writer nil
@@ -108,11 +108,11 @@ required to be registered there."))
          (executable-command
            (if appdir
                (list "cl-electron-server")
-               (list "npm" "run" "start" "--")))
+               (list "electron")))
          (execution-directory
            (if appdir
                nil
-               (asdf:system-source-directory :cl-electron))))
+               #P"@cl-electron-server@")))
     (setf (process interface)
           (uiop:launch-program
            (append executable-command
